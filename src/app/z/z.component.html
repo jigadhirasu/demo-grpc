@@ -1,0 +1,24 @@
+<h3>{{ number }}</h3>
+<div>
+  <h1>新增</h1>
+  <button (click)="create()">送出</button>
+</div>
+
+<div>
+  <h1>列表</h1>
+  <button (click)="list()">送出</button>
+</div>
+
+<div>
+  <h2>QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ</h2>
+  <div *ngFor="let o of xx | async">
+    <h2>{{ o.getUuid() }}</h2>
+    <h2>{{ o.getName() }}</h2>
+  </div>
+  <h2>QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ</h2>
+</div>
+
+<div>
+  <h1>訂閱</h1>
+  <button (click)="interview()">送出</button>
+</div>
