@@ -1,8 +1,11 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { from, map, Observable, of, ReplaySubject } from 'rxjs';
+import { from, map, Observable, take, tap, toArray } from 'rxjs';
 import { ProductServiceClient } from 'src/assets/jspb/Product.serviceServiceClientPb';
 import { Product } from 'src/assets/jspb/product_pb';
+import { waitFor } from '../wait-for';
+
+declare const Zone: any;
 
 @Component({
   selector: 'app-z',
@@ -12,12 +15,17 @@ import { Product } from 'src/assets/jspb/product_pb';
 export class ZComponent implements OnInit {
   service = new ProductServiceClient('http://localhost:9090');
   number = 0;
+  xx: Product[] = [];
+  gg: Product[] = [];
+  constructor() {
+    const q = this.list();
+    waitFor(q);
 
-  xx: Observable<Product[]> = of([
-    new Product().setUuid('XX'),
-    new Product().setUuid('ZZ'),
-  ]);
-  constructor() {}
+
+    const z = this.interview()
+    waitFor(z);
+    z.subscribe(g => this.gg = g);
+  }
 
   create = () => {
     const p = new Product();
@@ -28,10 +36,14 @@ export class ZComponent implements OnInit {
     );
   };
 
-  list = (): Observable<Product[]> => {
+  list = (): Observable<boolean> => {
     const p = new Product();
 
-    return from(this.service.list(p, {})).pipe(map((g) => g.getListList()));
+    return from(this.service.list(p, {})).pipe(
+      map(g => g.getListList()),
+      tap(g => this.xx = g),
+      map(() => true)
+    );
   };
 
   get = () => {
@@ -40,20 +52,23 @@ export class ZComponent implements OnInit {
     from(this.service.get(p, {})).subscribe((g) => console.log(g.toObject()));
   };
 
-  interview = () => {
+  interview = (): Observable<Product[]> => {
     const p = new Product();
     const stream = this.service.subscribe(p, {});
 
-    const o = new Observable((observe) => {
+    return new Observable<Product>((observe) => {
       stream.on('data', (g) => {
-        observe.next(g.toObject());
+        observe.next(g);
       });
-    });
+    }).pipe(
+      take(10),
+      toArray(),
+    );
 
-    o.subscribe((g) => console.log(g));
+
   };
 
   ngOnInit(): void {
-    this.xx = this.list();
+    this.list();
   }
 }

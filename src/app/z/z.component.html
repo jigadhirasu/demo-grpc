@@ -11,7 +11,7 @@
 
 <div>
   <h2>QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ</h2>
-  <div *ngFor="let o of xx | async">
+  <div *ngFor="let o of xx">
     <h2>{{ o.getUuid() }}</h2>
     <h2>{{ o.getName() }}</h2>
   </div>
@@ -21,4 +21,13 @@
 <div>
   <h1>訂閱</h1>
   <button (click)="interview()">送出</button>
+</div>
+
+<div>
+  <h2>GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG</h2>
+  <div *ngFor="let o of gg">
+    <h2>{{ o.getUuid() }}</h2>
+    <h2>{{ o.getName() }}</h2>
+  </div>
+  <h2>GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG</h2>
 </div>
