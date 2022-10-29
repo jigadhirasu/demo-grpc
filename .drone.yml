@@ -3,12 +3,11 @@ kind: pipeline
 type: kubernetes
 name: demo-develop
 steps:
-  # - name: demo-build
-  #   image: node:14-alpine
-  #   commands:
-  #     - npm install
-  #     - npm run build
-  #     - cp src/sdk.js dist/demo/sdk.js
+  - name: demo-build
+    image: node:14-alpine
+    commands:
+      - npm install
+      - npm run build
   - name: publish-nginx-gcr
     image: plugins/gcr
     settings:
