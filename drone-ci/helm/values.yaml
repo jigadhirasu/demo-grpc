@@ -1,24 +1,24 @@
 gcr:
   host: gcr.io/
-  project: reflected-mark-356909/
+  project: ding4pro/
 
-image: login/develop
+image: demo/gtm/develop
 
 # port default listen 80
 # env 額外的環境變數
 deployment:
-  - name: login
+  - name: demo
 
 # default port 80
 # default targetPort 17000
 # default selector is ${name}
 # nodePort is develop local connect
 service:
-  - name: login
+  - name: demo
 
 ingressroute:
-  - certResolver: tls
-    name: accounts
-    domain: accounts.asgame.xyz
-    service: login
+  - certResolver: cf
+    name: demo
+    domain: demo.4ding.xyz
+    service: demo
 ingressTCP:
