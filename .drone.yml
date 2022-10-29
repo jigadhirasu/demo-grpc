@@ -22,7 +22,7 @@ steps:
   - name: demo-helm
     image: pelotech/drone-helm3
     settings:
-      api_server: https://10.40.13.240
+      api_server: https://35.185.131.111
       chart: ./drone-ci/helm
       kube_certificate:
         from_secret: ca
