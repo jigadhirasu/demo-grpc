@@ -1,0 +1,7 @@
+image: login/main
+
+ingressroute:
+  - certResolver: tls
+    name: accounts
+    domain: accounts.asgame.club
+    service: login

@@ -1,0 +1,7 @@
+image: login/release
+
+ingressroute:
+  - certResolver: tls
+    name: accounts
+    domain: accounts.asgamestage.xyz
+    service: login

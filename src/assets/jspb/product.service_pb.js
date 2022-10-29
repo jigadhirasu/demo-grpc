@@ -1,4 +1,4 @@
-// source: product.service
+// source: product.service.proto
 /**
  * @fileoverview
  * @enhanceable
@@ -13,7 +13,7 @@
 
 var jspb = require('google-protobuf');
 var goog = jspb;
-var global = Function('return this')();
+var global = (function() { return this || window || global || self || Function('return this')(); }).call(null);
 
 var product_pb = require('./product_pb.js');
 goog.object.extend(proto, product_pb);

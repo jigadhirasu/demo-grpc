@@ -1,0 +1,24 @@
+gcr:
+  host: gcr.io/
+  project: reflected-mark-356909/
+
+image: login/develop
+
+# port default listen 80
+# env 額外的環境變數
+deployment:
+  - name: login
+
+# default port 80
+# default targetPort 17000
+# default selector is ${name}
+# nodePort is develop local connect
+service:
+  - name: login
+
+ingressroute:
+  - certResolver: tls
+    name: accounts
+    domain: accounts.asgame.xyz
+    service: login
+ingressTCP:

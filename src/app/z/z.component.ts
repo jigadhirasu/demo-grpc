@@ -1,8 +1,8 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { from, map, Observable, take, tap, toArray } from 'rxjs';
 import { ProductServiceClient } from 'src/assets/jspb/Product.serviceServiceClientPb';
-import { Product } from 'src/assets/jspb/product_pb';
+import { Product, Resource } from 'src/assets/jspb/product_pb';
 import { waitFor } from '../wait-for';
 
 declare const Zone: any;
@@ -13,7 +13,9 @@ declare const Zone: any;
   styleUrls: ['./z.component.scss'],
 })
 export class ZComponent implements OnInit {
-  service = new ProductServiceClient('http://localhost:9090');
+  @ViewChild('file') file!: ElementRef<HTMLInputElement>;
+
+  service = new ProductServiceClient('http://localhost:8878');
   number = 0;
   xx: Product[] = [];
   gg: Product[] = [];
@@ -35,6 +37,20 @@ export class ZComponent implements OnInit {
       console.log(g.toObject())
     );
   };
+
+  upload = () => {
+    console.log(this.file);
+    const fr = new FileReader();
+    fr.onload = () => {
+      console.log(fr.result);
+
+      // const data = new Resource().setData(fr.result as string);
+      // from(this.service.upload(data, {})).subscribe(g => {
+      //   console.log(g.getUrl);
+      // });
+    }
+    fr.readAsDataURL(this.file.nativeElement.files![0]);
+  }
 
   list = (): Observable<boolean> => {
     const p = new Product();

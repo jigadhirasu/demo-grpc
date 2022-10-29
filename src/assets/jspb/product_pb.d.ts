@@ -48,3 +48,25 @@ export namespace Product {
   }
 }
 
+export class Resource extends jspb.Message {
+  getData(): string;
+  setData(value: string): Resource;
+
+  getUrl(): string;
+  setUrl(value: string): Resource;
+
+  serializeBinary(): Uint8Array;
+  toObject(includeInstance?: boolean): Resource.AsObject;
+  static toObject(includeInstance: boolean, msg: Resource): Resource.AsObject;
+  static serializeBinaryToWriter(message: Resource, writer: jspb.BinaryWriter): void;
+  static deserializeBinary(bytes: Uint8Array): Resource;
+  static deserializeBinaryFromReader(message: Resource, reader: jspb.BinaryReader): Resource;
+}
+
+export namespace Resource {
+  export type AsObject = {
+    data: string,
+    url: string,
+  }
+}
+

@@ -1,0 +1,43 @@
+{{- $release := .Release }}
+{{- $gcr := .Values.gcr }}
+{{- $deployment := .Values.deployment }}
+{{- $image := .Values.image }}
+{{- range $deployment }}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .name }}
+spec:
+  replicas: {{ .replica | default 1 }}
+  selector:
+    matchLabels:
+      app: {{ .name }}
+  template:
+    metadata:
+      labels:
+        app: {{ .name }}
+    spec:
+      # terminationGracePeriodSeconds: 60
+      containers:
+      - env:
+        - name: Namespace
+          value: "{{ $release.Namespace }}"
+        - name: Revision
+          value: "{{ $release.Revision }}"
+        - name: PORT
+          value: "{{ .port | default 80 }}"
+        {{- range $key, $val := .env }}
+        - name: {{ $key }}
+          value: "{{ $val }}"  
+        {{- end }}
+        resources:
+          limits:
+            cpu: 100m
+            memory: 128Mi 
+          requests:
+            cpu: 25m
+            memory: 32Mi
+        name: {{ .name }}
+        image: {{ $gcr.host }}{{ $gcr.project }}{{ .image | default $image }}
+{{- end }}
